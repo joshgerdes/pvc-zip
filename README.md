@@ -11,8 +11,13 @@ The plugin has the ability to take in the following parameters:
 
 ####PvcZip()
 
-* **archiveName** (*default: "Archive"*) - name of the zip archive that is created.
+* **password** (*default: none*) - password to use with the zip archive created.
+* **name** (*default: "Archive"*) - name of the zip archive that is created.
 	
+####PvcUnzip()
+
+* **password** (*optional*) - password to used when unzipping a password-protected archive.
+
 ###Usage Examples
 
 Basic Zip (outputs: Archive.zip):
@@ -23,11 +28,19 @@ pvc.Source("js/*", "css/*", "test.js", "test.css")
 	.Save(@"deploy");
 ```
 
+Basic zip with password protection:
+
+```
+pvc.Source("js/*", "css/*", "test.js", "test.css")
+	.Pipe(new PvcZip(password: "pass@word1"))
+	.Save(@"deploy");
+```
+
 Basic zip with name of archive (outputs: Backup.zip):
 
 ```
 pvc.Source("js/*", "css/*", "test.js", "test.css")
-	.Pipe(new PvcZip("Backup"))
+	.Pipe(new PvcZip(name: "Backup"))
 	.Save(@"deploy");
 ```
 
@@ -36,5 +49,13 @@ Basic unzip:
 ```
 pvc.Source("Archive.zip")
 	.Pipe(new PvcUnzip())
+	.Save(@"deploy");
+```
+
+Basic unzip with password protection:
+
+```
+pvc.Source("Archive.zip")
+	.Pipe(new PvcUnzip("pass@word1"))
 	.Save(@"deploy");
 ```

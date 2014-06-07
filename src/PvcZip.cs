@@ -12,10 +12,12 @@ namespace PvcPlugins
     public class PvcZip : PvcPlugin
     {
         private readonly string _archiveName;
+        private readonly string _password;
 
-		public PvcZip(string archiveName = "Archive")
+		public PvcZip(string password = "", string name = "Archive")
 		{
-			_archiveName = archiveName;
+			_archiveName = name;
+            _password = password;
 		}
 
         public override IEnumerable<PvcStream> Execute(IEnumerable<PvcStream> inputStreams)
@@ -23,6 +25,11 @@ namespace PvcPlugins
             var outputStream = new MemoryStream();
             var returnStream = new PvcStream(() => outputStream);
             ZipFile zip = new ZipFile();
+
+            if (!String.IsNullOrEmpty(_password))
+            {
+                zip.Password = _password;
+            }
 
             foreach (var inputStream in inputStreams)
             {

@@ -11,9 +11,12 @@ namespace PvcPlugins
 {
     public class PvcUnzip : PvcPlugin
     {
-        public PvcUnzip()
-        {
-        }
+        private readonly string _password;
+
+		public PvcUnzip(string password = "")
+		{
+            _password = password;
+		}
 
         public override string[] SupportedTags
         {
@@ -34,6 +37,12 @@ namespace PvcPlugins
                 foreach (ZipEntry e in zip)
                 {
                     var outputStream = new ZipMemoryStream();
+
+                    if (!String.IsNullOrEmpty(_password))
+                    {
+                        e.Password = _password;
+                    }
+  
                     e.Extract(outputStream);
                     var resultStream = new PvcStream(() => outputStream);
                     resultStream.Tags.Add("unzipped");

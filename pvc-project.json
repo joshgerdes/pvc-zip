@@ -1,5 +1,6 @@
 {
-	"dependencies": {
-		"Pvc.NuGet": "0.0.1.2"
-	}
+  "dependencies": {
+    "Pvc.Core": "0.0.1.4",
+    "Pvc.NuGet": "0.0.1.2"
+  }
 }
