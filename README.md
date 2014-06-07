@@ -13,6 +13,7 @@ The plugin has the ability to take in the following parameters:
 
 * **password** (*default: none*) - password to use with the zip archive created.
 * **name** (*default: "Archive"*) - name of the zip archive that is created.
+* **level** (*default: "default"*) - name of the compression level to use with the zip archive created. Available levels: *'best', 'speed', 'default', 'none', '1', '2', '3', '4', '5', '6', '7', '8', '9'*
 	
 ####PvcUnzip()
 
@@ -41,6 +42,14 @@ Basic zip with name of archive (outputs: Backup.zip):
 ```
 pvc.Source("js/*", "css/*", "test.js", "test.css")
 	.Pipe(new PvcZip(name: "Backup"))
+	.Save(@"deploy");
+```
+
+Basic zip with compression level:
+
+```
+pvc.Source("js/*", "css/*", "test.js", "test.css")
+	.Pipe(new PvcZip(level: "speed"))
 	.Save(@"deploy");
 ```
 
